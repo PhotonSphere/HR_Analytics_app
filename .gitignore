@@ -1,0 +1,4 @@
+hr_app
+*.pyc
+.DS_Store
+.env
