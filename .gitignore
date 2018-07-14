@@ -3,5 +3,3 @@ hr_app
 .DS_Store
 .env
 .ipynb_checkpoints
-Model_Training.ipynb
-HR_comma_sep.csv
