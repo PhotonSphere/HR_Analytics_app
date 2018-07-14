@@ -21,7 +21,6 @@ with open('final_model.pkl', 'rb') as f:
     objects.append(pickle.load(f))
 
 app = dash.Dash()
-server = app.server
 
 app.title = 'HR Analytics'
 
@@ -38,6 +37,7 @@ layout = html.Div([
                 html.Br([]),
                 html.Br([]),
 
+                # Create dropdowns with parameters which will be inputed into model to return probability predicted
                 html.P([
                     html.Label("Employee's Satisfaction level"),
                     # dcc.Input(id='mother_birth', value=1952, type='number'),
@@ -205,6 +205,7 @@ layout = html.Div([
                 #     style={'width': '15%', 'height': '2%', 'display':'inline-block'}
                 # ),
 
+                # Create Output box/plot to display the predicted probability
                 html.Div([
                     dcc.Graph(id='pred_plot',
                               figure = {
@@ -220,28 +221,18 @@ layout = html.Div([
                               }, config={'displayModeBar': False})
                 ], className='container', style={'width':'70%','paddingLeft':'5px'}),
 
-                html.Br([]),
-                html.Br([]),
-                
-                html.Div([dcc.Markdown('''Find out more about the data [Kaggle](https://www.kaggle.com/colara/hr-analytics). Get the code on [GitHub](https://github.com/PhotonSphere/renewable_energy_app)''')], style={'textAlign':'center','color':'royalblue'})
-
-    ], className="subpage"),
-
-                # Create dropdowns with parameters which will be inputed into model to return probability predicted
-
-                # Add a picture aligned to the left of the parameters dropdown to add volumne
-
-                # Create Output box to display the predicted probability
-
-                # information of the dataset used to train the model
-
                 # Create a section to display the visualizations created during EDA
-
                     #Create first visualizations wth callback options
 
                     # Create second visualiation exploring different aspect of the data analysis
 
-                    # Information and link to access the code from github
+                html.Br([]),
+                html.Br([]),
+
+                # Information and link to access the dataset from kaggle code from github
+                html.Div([dcc.Markdown('''Find out more about the data [Kaggle](https://www.kaggle.com/colara/hr-analytics). Get the code on [GitHub](https://github.com/PhotonSphere/HR_Analytics_app)''')], style={'textAlign':'center','color':'royalblue'})
+
+    ], className="subpage"),
 ], className="page")
 
 # assinging the layout to the app
