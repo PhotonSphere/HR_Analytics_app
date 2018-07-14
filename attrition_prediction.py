@@ -8,6 +8,7 @@ import dash
 import plotly.graph_objs as go
 import base64
 import pickle
+from random import randint as rnum
 
 DF_SAMPLE = pd.DataFrame({
         "Employee's Satisfaction level":[2],"Number of projects":[9],
@@ -222,7 +223,7 @@ layout = html.Div([
                     #Create first visualizations wth callback options
 
                     # Create second visualiation exploring different aspect of the data analysis
-
+                html.Div([html.H6("Live prediction not possible to different environment than on which model was trained. Use code from Github to generate the model and run Dash server to check the functioning, the above response is generated using random numbers as a proxy of what will happen on receiving predictions from the model. Anyway enter all the parameters and click submit to check the interactivity if you didn't do it.")], style={'textAlign':'center'}),
                 html.Br([]),
                 html.Br([]),
 
@@ -253,198 +254,217 @@ def output(n_clicks, sat, proj, comp, prom, dept, sal, hours, acci, eval):
 
     if sat != '' and proj != '' and comp != '' and  prom!= '' and dept != '' and sal != '' and hours != '' and acci != '' and eval != '':
 
-        objects = []
-        with open('final_model.pkl', 'rb') as f:
-            objects.append(pickle.load(f))
+        try:
+            ## generating ValueError for testing to run code in exception
+            ### errgen = int('a')
+            objects = []
+            with open('final_model.pkl', 'rb') as f:
+                objects.append(pickle.load(f))
 
 
-        if float(eval) < 0.6:
-            underperformer = 1
-        else:
-            underperformer = 0
+            if float(eval) < 0.6:
+                underperformer = 1
+            else:
+                underperformer = 0
 
-        if float(sat)/10 < 0.2:
-            unhappy = 1
-        else:
-            unhappy = 0
+            if float(sat)/10 < 0.2:
+                unhappy = 1
+            else:
+                unhappy = 0
 
-        if float(eval) > 0.8 and float(sat)/10 > 0.7:
-            overachiever = 1
-        else:
-            overachiever = 0
+            if float(eval) > 0.8 and float(sat)/10 > 0.7:
+                overachiever = 1
+            else:
+                overachiever = 0
 
-        if sal == 'high':
-            salary_high = 1
-            salary_medium = 0
-            salary_low = 0
-        elif sal == 'medium':
-            salary_high = 0
-            salary_medium = 1
-            salary_low = 0
-        elif sal == 'low':
-            salary_high = 0
-            salary_medium = 0
-            salary_low = 1
+            if sal == 'high':
+                salary_high = 1
+                salary_medium = 0
+                salary_low = 0
+            elif sal == 'medium':
+                salary_high = 0
+                salary_medium = 1
+                salary_low = 0
+            elif sal == 'low':
+                salary_high = 0
+                salary_medium = 0
+                salary_low = 1
 
-        if dept == 'sales':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 1
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'accounting':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 1
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'IT':
-            Department_IT = 1
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'RandD':
-            Department_IT = 0
-            Department_RandD = 1
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'hr':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 1
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'management':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 1
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'marketing':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 1
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'product_mng':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 1
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 0
-        elif dept == 'support':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 1
-            Department_technical = 0
-        elif dept == 'technical':
-            Department_IT = 0
-            Department_RandD = 0
-            Department_accounting = 0
-            Department_hr = 0
-            Department_management = 0
-            Department_marketing = 0
-            Department_product_mng = 0
-            Department_sales = 0
-            Department_support = 0
-            Department_technical = 1
+            if dept == 'sales':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 1
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'accounting':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 1
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'IT':
+                Department_IT = 1
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'RandD':
+                Department_IT = 0
+                Department_RandD = 1
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'hr':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 1
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'management':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 1
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'marketing':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 1
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'product_mng':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 1
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 0
+            elif dept == 'support':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 1
+                Department_technical = 0
+            elif dept == 'technical':
+                Department_IT = 0
+                Department_RandD = 0
+                Department_accounting = 0
+                Department_hr = 0
+                Department_management = 0
+                Department_marketing = 0
+                Department_product_mng = 0
+                Department_sales = 0
+                Department_support = 0
+                Department_technical = 1
 
-        data = pd.DataFrame(
-                {'satisfaction_level':[sat/10], 'last_evaluation':[eval],
-                 'number_project':[proj], 'average_monthly_hours':[hours],
-                 'time_spend_company':[comp], 'Work_accident':[acci],
-                 'promotion_last_5years':[prom], 'underperformer':[underperformer], 'unhappy':[unhappy],
-                 'overachiever':[overachiever], 'Department_IT':[Department_IT], 'Department_RandD':[Department_RandD],
-                 'Department_accounting':[Department_accounting], 'Department_hr':[Department_hr], 'Department_management':[Department_management], 'Department_marketing':[Department_marketing],
-       'Department_product_mng':[Department_product_mng], 'Department_sales':[Department_sales], 'Department_support':[Department_support],
-       'Department_technical':[Department_technical], 'salary_high':[salary_high], 'salary_low':[salary_low], 'salary_medium':[salary_medium]}
-        )
+            data = pd.DataFrame(
+                    {'satisfaction_level':[sat/10], 'last_evaluation':[eval],
+                     'number_project':[proj], 'average_monthly_hours':[hours],
+                     'time_spend_company':[comp], 'Work_accident':[acci],
+                     'promotion_last_5years':[prom], 'underperformer':[underperformer], 'unhappy':[unhappy],
+                     'overachiever':[overachiever], 'Department_IT':[Department_IT], 'Department_RandD':[Department_RandD],
+                     'Department_accounting':[Department_accounting], 'Department_hr':[Department_hr], 'Department_management':[Department_management], 'Department_marketing':[Department_marketing],
+           'Department_product_mng':[Department_product_mng], 'Department_sales':[Department_sales], 'Department_support':[Department_support],
+           'Department_technical':[Department_technical], 'salary_high':[salary_high], 'salary_low':[salary_low], 'salary_medium':[salary_medium]}
+            )
 
-        #return dt.DataTable(rows=data.to_dict('records'))
-        pred = objects[0].predict_proba(data)
-        attrition_risk = [p[1] for p in pred][0] * 100
-        attrition_safe = [p[0] for p in pred][0] * 100
-        #return attrition_risk
+            #return dt.DataTable(rows=data.to_dict('records'))
+            pred = objects[0].predict_proba(data)
+            attrition_risk = [p[1] for p in pred][0] * 100
+            attrition_safe = [p[0] for p in pred][0] * 100
+            #return attrition_risk
 
-        figure = go.Figure(
-                data = [
-                    go.Bar(
-                        y = ['Attrition Risk'],
-                        x = [attrition_risk],
-                        marker = dict(color='red'),
-                        name = 'Risk',
-                        orientation = 'h'
-                    ),
-
-                    go.Bar(
-                        y = ['Attrition Safe'],
-                        x = [attrition_safe],
-                        marker = dict(color='green'),
-                        name = 'Safe',
-                        orientation = 'h'
-                    )
-                ],
-
-                layout = dict(
-                        title = "Attrition Probability {}%".format(int(attrition_risk)),
-                        yaxis = dict(
-                                    showgrid=False,
-                                    showline=False,
-                                    showticklabels=True,
-                                    domain = [0,1]
+            figure = go.Figure(
+                    data = [
+                        go.Bar(
+                            y = ['Attrition Risk'],
+                            x = [attrition_risk],
+                            marker = dict(color='red'),
+                            name = 'Risk',
+                            orientation = 'h'
                         ),
-                        hovermode = 'closest',
-                        width = 540, height = 275
-                )
-        )
+
+                        go.Bar(
+                            y = ['Attrition Safe'],
+                            x = [attrition_safe],
+                            marker = dict(color='green'),
+                            name = 'Safe',
+                            orientation = 'h'
+                        )
+                    ],
+
+                    layout = dict(
+                            title = "Attrition Probability {}%".format(int(attrition_risk)),
+                            yaxis = dict(
+                                        showgrid=False,
+                                        showline=False,
+                                        showticklabels=True,
+                                        domain = [0,1]
+                            ),
+                            hovermode = 'closest',
+                            width = 540, height = 275
+                    )
+            )
+        except ValueError:
+            ran_att = rnum(1, 100)
+            figure = {
+              'data': [
+                  go.Bar(
+                      y = ['Attrition Risk', 'Attrition Safe'],
+                      x = [ran_att, 100-ran_att],
+                      marker = dict(color = ['red','green']),
+                      orientation = 'h',
+                  )
+              ],
+             'layout':{'title':"Attrition Probability " + (str(ran_att) + '%'), 'hovermode':'closest', 'width':540, 'height':275
+                    }
+            }
+
+
 
         return figure
 # create Input and Output callback functions for the EDA part
