@@ -16,11 +16,8 @@ DF_SAMPLE = pd.DataFrame({
         "Work Accident":['No'],"Last Evaluation":[0.85]
 })
 
-objects = []
-with open('final_model.pkl', 'rb') as f:
-    objects.append(pickle.load(f))
-
 app = dash.Dash()
+server = app.server
 
 app.title = 'HR Analytics'
 
@@ -253,7 +250,13 @@ app.layout = layout
     State('acci', 'value'),
     State('eval', 'value'),])
 def output(n_clicks, sat, proj, comp, prom, dept, sal, hours, acci, eval):
+
     if sat != '' and proj != '' and comp != '' and  prom!= '' and dept != '' and sal != '' and hours != '' and acci != '' and eval != '':
+
+        objects = []
+        with open('final_model.pkl', 'rb') as f:
+            objects.append(pickle.load(f))
+
 
         if float(eval) < 0.6:
             underperformer = 1
