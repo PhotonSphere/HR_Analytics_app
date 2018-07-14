@@ -1,2 +1,2 @@
 # HR_Analytics_app
-Employee attrition app build with dash to predict attrition probability using a underlying Random Forest model
+Employee attrition app build with dash to predict attrition probability using a underlying Random Forest model. Deployed model on [Heroku](https://attrition-prediction-app.herokuapp.com/) , the prediction engine encounters ValueError on heroku due to difference in environment used for training the model. The interactivity is functioning which provides the sense of the functionality of the App.
