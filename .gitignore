@@ -2,6 +2,6 @@ hr_app
 *.pyc
 .DS_Store
 .env
-.ipynb_checkpoints/Model_Training-checkpoint.ipynb
+.ipynb_checkpoints
 Model_Training.ipynb
 HR_comma_sep.csv
